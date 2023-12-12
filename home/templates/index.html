@@ -1,0 +1,92 @@
+{% extends "base.html" %} {% block title %}Notices{% endblock title %} 
+{% block style %}
+<style>
+  #th {
+    background-color: cornflowerblue;
+    text-align: center;
+  }
+  #title {
+    text-align: center;
+    display: block;
+  }
+  #viewbtn:hover {
+    background-color: rgb(63, 124, 238);
+  }
+  #viewbtn {
+    text-decoration: none;
+    color: white;
+    background-color: cornflowerblue;
+  }
+</style>
+{% endblock style %} {%block btn%}
+<div
+  style="
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  "
+>
+  {{user}}
+</div>
+{%if loginStatus%}
+<button
+  class="btn btn-outline-danger"
+  onclick="window.location.href='/logout';"
+>
+  Logout
+</button>
+{%else%}
+<button
+  class="btn btn-outline-success"
+  onclick="window.location.href='/login';"
+>
+  Login/Signup
+</button>
+{%endif%} {%endblock btn%} {% block body %} {%load static%}
+<h2 class="mb-4 mt-4" id="title">Notices</h2>
+<div class="table-responsive rounded-4">
+  <table class="table table-hover table-striped table-borderless">
+    <thead>
+      <tr>
+        <th scope="col" id="th">#</th>
+        <th scope="col" id="th">Title</th>
+        <th scope="col" id="th" style="max-width: 400px">Short Description</th>
+        <th scope="col" id="th">Date&Time</th>
+        <th scope="col" id="th">File</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for notice in notices %}
+      <tr>
+        <th scope="row" id="th">{{forloop.counter}}</th>
+        <td style="text-align: center">{{notice.title}}</td>
+        <td style="max-width: 400px; text-align: center">
+          {{notice.short_description}}
+        </td>
+        <td style="text-align: center">{{notice.datetime}}</td>
+        <td>
+          <div style="display: flex; justify-content: center">
+            <a
+              class="btn rounded-4"
+              id="viewbtn"
+              href="{{notice.file}}"
+              style=""
+              >View</a
+            >
+            &nbsp&nbsp
+            <a
+              class="btn btn-success rounded-4"
+              href="{{notice.file}}"
+              download
+            >
+              Download
+            </a>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock body %}
