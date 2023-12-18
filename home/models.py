@@ -13,6 +13,8 @@ class Notice(models.Model):
     short_description = models.TextField(default='', blank=True, max_length=255)
     datetime = models.DateTimeField(default = datetime.datetime.now)
     file = models.FileField(upload_to='static')
+    
+    
 
 @receiver(post_save, sender = Notice)
 def send_email(sender, instance, **kwargs):

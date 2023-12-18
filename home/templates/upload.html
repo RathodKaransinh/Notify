@@ -1,0 +1,23 @@
+{%extends 'base.html'%}
+
+{%block title%}Upload Notice{%endblock title%}
+
+{%block body%}
+
+<form method="post" action="upload" enctype="multipart/form-data">
+    <div class="mb-3">
+      <label for="title" class="form-label">Title</label>
+      <input type="text" class="form-control" id="title" aria-describedby="title">
+    </div>
+    <div class="mb-3">
+      <label for="short_description" class="form-label">Short Description</label>
+      <textarea class="form-control" id="short_description"></textarea>
+    </div>
+    <div class="mb-3">
+        <label class="form-check-label" for="file">File</label>
+        <input type="file" class="form-control" id="file">
+    </div>
+    <button type="submit" class="btn btn-primary">Upload</button>
+</form>
+
+{%endblock body%}
