@@ -1,0 +1,85 @@
+BEGIN:VCALENDAR
+METHOD:REQUEST
+PRODID:Microsoft Exchange Server 2010
+VERSION:2.0
+BEGIN:VTIMEZONE
+TZID:India Standard Time
+BEGIN:STANDARD
+DTSTART:16010101T000000
+TZOFFSETFROM:+0530
+TZOFFSETTO:+0530
+END:STANDARD
+BEGIN:DAYLIGHT
+DTSTART:16010101T000000
+TZOFFSETFROM:+0530
+TZOFFSETTO:+0530
+END:DAYLIGHT
+END:VTIMEZONE
+BEGIN:VEVENT
+ORGANIZER;CN=Pratik Patil:mailto:pratik.patil@matter.in
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN=Jigar Pate
+ l:mailto:jigar.patel@matter.in
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN=Kateshiya 
+ Sunil Sureshbhai:mailto:kateshiyasunil94@gmail.com
+ATTACH:CID:3773827C5957CD49A24A25FD14939495@INDPRD01.PROD.OUTLOOK.COM
+DESCRIPTION;LANGUAGE=en-US:\n______________________________________________
+ __________________________________\nMicrosoft Teams Need help?<https://aka
+ .ms/JoinTeamsMeeting?omkt=en-US>\nJoin the meeting now<https://teams.micro
+ soft.com/l/meetup-join/19%3ameeting_YjIzNTI0MmItMzNkNC00Y2Y0LTg0NGYtN2VjMG
+ Q0ODRjMDc3%40thread.v2/0?context=%7b%22Tid%22%3a%229525f6a6-86a7-4682-99fa
+ -b8ccf82babf6%22%2c%22Oid%22%3a%225d1d81fa-7124-4157-9e4d-ae4eb9cafd03%22%
+ 7d>\nMeeting ID: 480 415 519 607\nPasscode: oEtbse\n______________________
+ __________\nDial-in by phone\nFor organizers: Meeting options<https://team
+ s.microsoft.com/meetingOptions/?organizerId=5d1d81fa-7124-4157-9e4d-ae4eb9
+ cafd03&tenantId=9525f6a6-86a7-4682-99fa-b8ccf82babf6&threadId=19_meeting_Y
+ jIzNTI0MmItMzNkNC00Y2Y0LTg0NGYtN2VjMGQ0ODRjMDc3@thread.v2&messageId=0&lang
+ uage=en-US> | Reset dial-in PIN<https://dialin.teams.microsoft.com/usp/pst
+ nconferencing>\n__________________________________________________________
+ ______________________\n\nCaution: This email originated from outside of t
+ he organization. Do not click links or open attachments unless you recogni
+ ze the sender and know the content is safe.\n\n
+UID:040000008200E00074C5B7101A82E00800000000302D24944271DA01000000000000000
+ 010000000069B66AF6D36C44887A8962945A33951
+SUMMARY;LANGUAGE=en-US:Interview Schedule_GET_Battery Pack Development-Suni
+ l
+DTSTART;TZID=India Standard Time:20240311T170000
+DTEND;TZID=India Standard Time:20240311T173000
+CLASS:PUBLIC
+PRIORITY:5
+DTSTAMP:20240308T045419Z
+TRANSP:OPAQUE
+STATUS:CONFIRMED
+SEQUENCE:0
+LOCATION;LANGUAGE=en-US:Microsoft Teams Meeting
+X-MICROSOFT-CDO-APPT-SEQUENCE:0
+X-MICROSOFT-CDO-OWNERAPPTID:503855080
+X-MICROSOFT-CDO-BUSYSTATUS:TENTATIVE
+X-MICROSOFT-CDO-INTENDEDSTATUS:BUSY
+X-MICROSOFT-CDO-ALLDAYEVENT:FALSE
+X-MICROSOFT-CDO-IMPORTANCE:1
+X-MICROSOFT-CDO-INSTTYPE:0
+X-MICROSOFT-SKYPETEAMSMEETINGURL:https://teams.microsoft.com/l/meetup-join/
+ 19%3ameeting_YjIzNTI0MmItMzNkNC00Y2Y0LTg0NGYtN2VjMGQ0ODRjMDc3%40thread.v2/
+ 0?context=%7b%22Tid%22%3a%229525f6a6-86a7-4682-99fa-b8ccf82babf6%22%2c%22O
+ id%22%3a%225d1d81fa-7124-4157-9e4d-ae4eb9cafd03%22%7d
+X-MICROSOFT-SCHEDULINGSERVICEUPDATEURL:https://api.scheduler.teams.microsof
+ t.com/teams/9525f6a6-86a7-4682-99fa-b8ccf82babf6/5d1d81fa-7124-4157-9e4d-a
+ e4eb9cafd03/19_meeting_YjIzNTI0MmItMzNkNC00Y2Y0LTg0NGYtN2VjMGQ0ODRjMDc3@th
+ read.v2/0
+X-MICROSOFT-SKYPETEAMSPROPERTIES:{"cid":"19:meeting_YjIzNTI0MmItMzNkNC00Y2Y
+ 0LTg0NGYtN2VjMGQ0ODRjMDc3@thread.v2"\,"private":true\,"type":0\,"mid":0\,"
+ rid":0\,"uid":null}
+X-MICROSOFT-DONOTFORWARDMEETING:FALSE
+X-MICROSOFT-DISALLOW-COUNTER:FALSE
+X-MICROSOFT-REQUESTEDATTENDANCEMODE:DEFAULT
+X-MICROSOFT-ISRESPONSEREQUESTED:TRUE
+X-MICROSOFT-LOCATIONS:[ { "DisplayName" : "Microsoft Teams Meeting"\, "Loca
+ tionAnnotation" : ""\, "LocationSource" : 0\, "Unresolved" : false\, "Loca
+ tionUri" : "" } ]
+BEGIN:VALARM
+DESCRIPTION:REMINDER
+TRIGGER;RELATED=START:-PT15M
+ACTION:DISPLAY
+END:VALARM
+END:VEVENT
+END:VCALENDAR

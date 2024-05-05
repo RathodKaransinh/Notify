@@ -89,7 +89,7 @@
   </head>
 
   <body class="text-center">
-    <form class="form-signin" method="post" action="/register">
+    <form class="form-signin" method="post">
       {% csrf_token %}
       <h1 class="h3 mb-3 font-weight-normal">Register</h1>
       <label for="inputName" class="sr-only">Username</label>
@@ -122,12 +122,11 @@
         required
       />
       <div class="button mb-3">
-        <a href="/login" type="button">Login?</a>
+        <a href="{% url 'login' %}" type="button">Login?</a>
       </div>
       <button class="btn btn-lg btn-primary btn-block" type="submit">
         Register
       </button>
-      <p class="mt-5 mb-3 text-muted">&copy; 2017-2019</p>
     </form>
   </body>
 </html>

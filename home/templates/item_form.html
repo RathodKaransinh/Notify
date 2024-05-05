@@ -1,0 +1,113 @@
+{%extends 'base.html'%}
+
+{%block header%}
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Item Form</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Item Form</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+{%endblock header%}
+
+{%block content%}
+<div class="content">
+    <form method="post">
+        {% csrf_token %}
+        {{ formset.management_form }}
+        <input type="hidden" name="deleted_forms" id="deleted_forms" value="[]">
+
+        <table border="1px solid black" class="table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Keyword</th>
+                    <th>Quantity</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="formset">
+                {% for form in formset %}
+                <tr data-form-index="{{ forloop.counter0 }}">
+                    <td>{{ form.title }}</td>
+                    <td>{{ form.keyword }}</td>
+                    <td>{{ form.quantity }}</td>
+                    <td>
+                        <button type="button" class="btn btn-danger" onclick="delRow(this)"><i class="fa fa-trash"></i></button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <button type="button" class="btn btn-success float-left" onclick="addMore()">Add More</button>
+        <button type="submit" class="btn btn-primary float-right">Submit</button>
+    </form>
+</div>
+{%endblock content%}
+
+{% block js %}
+<script>
+    const empty_form = 
+    `
+        <td><input type="text" name="form-0-title" maxlength="50" class="form-control" placeholder="Enter title"
+                id="id_form-0-title"></td>
+        <td><select name="form-0-keyword" class="form-control" placeholder="Enter keyword" id="id_form-0-keyword">
+                <option value="" selected="">---------</option>
+
+                <option value="1">gtu</option>
+
+                <option value="2">timetable</option>
+
+            </select></td>
+        <td><input type="number" name="form-0-quantity" min="0" class="form-control" placeholder="Enter quantity"
+                id="id_form-0-quantity"></td>
+        <td>
+                <button type="button" class="btn btn-danger" onclick="delRow(this)"><i class="fa fa-trash"></i></button>
+            </td>
+    `
+
+    let nextIndex = 1
+    let delIndexes = []
+
+    function addMore() {
+        tbody = document.getElementById('formset')
+        newForm = document.createElement('tr')
+        newForm.innerHTML = empty_form.replaceAll('0', String(nextIndex))
+        newForm.setAttribute("data-form-index", String(nextIndex))
+        tbody.append(newForm)
+
+        const totalForms = document.getElementById('id_form-TOTAL_FORMS');
+        totalForms.value = parseInt(totalForms.value) + 1;
+        nextIndex++;
+    }
+
+    function delRow(e) {
+        const row = e.closest("tr");
+        row.style.display = "none";
+        const formIndex = row.getAttribute("data-form-index");
+        delIndexes.push(formIndex);
+        console.log(delIndexes)
+        document.getElementById("deleted_forms").value = JSON.stringify(delIndexes);
+
+        const tbody = document.getElementById("formset");
+        const rows = Array.from(tbody.children);  // Get all child elements (rows)
+
+        const visibleRows = rows.filter(row => {
+            const style = window.getComputedStyle(row);  // Get computed style
+            return style.display !== 'none';  // Check if display is not 'none'
+        });
+        if (visibleRows.length === 0) {
+            addMore();
+        }
+    }
+</script>
+{% endblock js %}

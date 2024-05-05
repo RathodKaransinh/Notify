@@ -1,1 +1,2 @@
-django
+django~=5.0.3
+psycopg2

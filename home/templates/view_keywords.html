@@ -1,0 +1,74 @@
+{%extends 'base.html'%}
+
+{%block header%}
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Keywords</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Keywords</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+{%endblock header%}
+
+{%block content%}
+<div class="content">
+    <div class="d-flex">
+        <button class="btn btn-primary download-csv mb-3 mr-1">csv</button>
+        <button class="btn btn-primary download-zip mb-3">zip</button>
+    </div>
+    <ul class="list-group">
+        {% for keyword in keywords %}
+        <li class="list-group-item">{{keyword.name}}</li>
+        {% endfor %}
+    </ul>
+</div>
+{%endblock content%}
+
+{% block js %}
+<script>
+    document.querySelector(".download-csv").addEventListener("click", function() {
+        download_file('type-csv');
+    });
+    document.querySelector(".download-zip").addEventListener("click", function() {
+        download_file('type-zip');
+    });
+
+    function download_file(fileType){
+        document.querySelector('.overlay').classList.remove("hidden");
+        document.querySelector('.loader').classList.remove("hidden");
+
+        fetch("{% url 'download' %}?type=" + fileType) // Change this to your download endpoint and desired type
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Failed to fetch");
+                }
+                return response.blob(); // Retrieve the file data as a blob
+            })
+            .then(blob => {
+                // Create a link element to trigger the download
+                const url = window.URL.createObjectURL(blob);
+                const link = document.createElement("a");
+                link.href = url;
+                link.download = blob.type === "application/zip" ? "data.zip" : "data.csv"; // Determine the filename
+                document.body.appendChild(link);
+                link.click(); // Trigger the download
+                link.remove(); // Remove the link
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            })
+            .finally(() => {
+                document.querySelector('.overlay').classList.add("hidden");
+                document.querySelector('.loader').classList.add("hidden");
+            });
+    }
+</script>
+{% endblock js %}
