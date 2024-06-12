@@ -17,6 +17,11 @@ from .models import Item, Notice, NoticeKeyword
 
 
 @login_required(login_url='/login/')
+def dashboard(request):
+    return render(request, 'dashboard.html')
+
+
+@login_required(login_url='/login/')
 def list_notices(request):
     login_status = True
     if request.user.is_anonymous:

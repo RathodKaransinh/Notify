@@ -6,6 +6,9 @@ from django.contrib.auth.models import User
 # Create your views here.
 
 def loginUser(request):
+    if request.user.is_authenticated:
+        return redirect('dashboard')
+
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -17,7 +20,7 @@ def loginUser(request):
         if user is not None:
             # A backend authenticated the credentials
             login(request, user)
-            return redirect("list_notices")
+            return redirect("dashboard")
 
         else:
             # No backend authenticated the credentials

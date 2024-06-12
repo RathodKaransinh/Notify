@@ -1,7 +1,10 @@
 from django.urls import path
+from django.views.generic import TemplateView
+
 from .views import *
 
 urlpatterns = [
+    path('', dashboard, name='dashboard'),
     path('list-notices', list_notices, name='list_notices'),
     path('upload', upload, name='upload'),
     path('view-keywords', view_keywords, name='view_keywords'),

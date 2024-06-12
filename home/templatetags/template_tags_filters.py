@@ -4,6 +4,7 @@ VIEW_NAMES = {
     1: ['view_keywords'],
     2: ['list_notices', 'upload'],
     3: ['add_items'],
+    4: ['dashboard'],
 }
 
 register = template.Library()
