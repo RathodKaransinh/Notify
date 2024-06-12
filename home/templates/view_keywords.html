@@ -28,6 +28,9 @@
         {% for keyword in keywords %}
         <li class="list-group-item">{{keyword.name}}</li>
         {% endfor %}
+        {% for keyword in queryset %}
+        <li class="list-group-item">{{keyword.name}}</li>
+        {% endfor %}
     </ul>
 </div>
 {%endblock content%}

@@ -3,10 +3,14 @@ import io
 import json
 import zipfile
 
+from django.contrib import messages
 from django.contrib.auth.decorators import permission_required, login_required
-from django.forms import modelformset_factory
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.forms import modelformset_factory, modelform_factory
+from django.http import HttpResponse, Http404
+from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy
+from django.views import View
 
 from home.forms import ItemForm
 from .models import Item, Notice, NoticeKeyword
@@ -111,3 +115,88 @@ def download(request):
 
     else:
         return HttpResponse(status=300)
+
+
+class BaseView(View):
+    model_class = None
+    form_class = None
+    list_template_name = ''
+    form_template_name = ''
+    success_url = ''
+    login_url = reverse_lazy('login')
+    redirect_url = reverse_lazy('list_notices')
+    permission_required = ''
+    action = 'list'
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect(self.login_url)
+
+        if not request.user.has_perm(self.permission_required):
+            return redirect(self.redirect_url)
+
+        if self.action == 'list':
+            return self.list(request)
+        elif self.action == 'create':
+            return self.create(request)
+        elif self.action == 'update':
+            pk = kwargs.get('pk')
+            if not pk:
+                raise Http404("Update action requires a 'pk'.")
+            return self.update(request, pk)
+        elif self.action == 'delete':
+            pk = kwargs.get('pk')
+            if not pk:
+                raise Http404("Delete action requires a 'pk'.")
+            return self.delete(request, pk)
+        else:
+            raise Http404("Unknown action.")
+
+    def list(self, request):
+        queryset = self.model_class.objects.all()
+        return render(request, self.list_template_name, {'queryset': queryset})
+
+    def create(self, request):
+        if request.method == 'POST':
+            form = self.form_class(data=request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request, self.model_class.__name__ + " created successfully.")
+                return redirect(self.success_url)
+            else:
+                messages.error(request, "There was an error with your submission.")
+        else:
+            form = self.form_class()
+
+        return render(request, self.form_template_name, {'form': form})
+
+    def update(self, request, pk):
+        item = get_object_or_404(self.model_class, pk=pk)
+
+        if request.method == 'POST':
+            form = self.form_class(data=request.POST, instance=item)
+            if form.is_valid():
+                form.save()
+                messages.success(request, self.model_class.__name__ + " updated successfully.")
+                return redirect(self.success_url)
+            else:
+                messages.error(request, "There was an error with your submission.")
+        else:
+            form = self.form_class(instance=item)
+
+        return render(request, self.form_template_name, {'form': form})
+
+    def delete(self, request, pk):
+        item = get_object_or_404(self.model_class, pk=pk)
+        item.delete()
+        messages.success(request, self.model_class.__name__ + " deleted successfully.")
+        return redirect(self.success_url)
+
+
+class KeywordCrudView(BaseView):
+    model_class = NoticeKeyword
+    form_class = modelform_factory(NoticeKeyword, fields='__all__')
+    list_template_name = 'list_keywords.html'
+    form_template_name = 'keyword_form.html'
+    success_url = reverse_lazy('list_keywords')
+
